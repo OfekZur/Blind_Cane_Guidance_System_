@@ -34,8 +34,9 @@ fi
 # Install PyTorch if needed
 if ! python3 -c "import torch" &> /dev/null; then
     echo "PyTorch not found. Installing..."
-    chmod +x "$SCRIPT_DIR/install_pytorch/install_pytorch.sh"
-    "$SCRIPT_DIR/install_pytorch/install_pytorch.sh"
+    chmod +x "$SCRIPT_DIR/install_pytorch.sh"
+    "$SCRIPT_DIR/install_pytorch.sh"
+
 else
     echo "PyTorch is already installed. Skipping."
 fi
