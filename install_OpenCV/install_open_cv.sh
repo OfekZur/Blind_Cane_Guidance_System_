@@ -15,16 +15,18 @@ echo -e "${GREEN}Installing OpenCV on Raspberry Pi 5...${NC}"
 sudo apt update
 sudo apt upgrade -y
 
-# Install system dependencies
-sudo apt install -y python3-dev python3-pip python3-numpy \
+# Install system dependencies (required by OpenCV)
+sudo apt install -y python3-dev python3-numpy \
     libjpeg-dev libtiff-dev libpng-dev \
     libavcodec-dev libavformat-dev libswscale-dev \
     libv4l-dev libxvidcore-dev libx264-dev \
     libgtk-3-dev libatlas-base-dev gfortran
 
-# Upgrade pip and install OpenCV from PyPI
-sudo -H pip3 install --upgrade pip
-sudo -H pip3 install opencv-python opencv-contrib-python
+# Upgrade pip inside the virtual environment (no sudo)
+pip install --upgrade pip
+
+# Install OpenCV from PyPI inside venv
+pip install opencv-python opencv-contrib-python
 
 # Verify installation
 python3 -c "import cv2; print('OpenCV version:', cv2.__version__)"
