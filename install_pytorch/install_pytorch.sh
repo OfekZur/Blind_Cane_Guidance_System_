@@ -9,24 +9,20 @@ NC='\033[0m'
 
 trap 'echo -e "${RED}Installation failed!${NC}"' ERR
 
-echo -e "${GREEN}Installing PyTorch and Torchvision on Raspberry Pi 5...${NC}"
+echo -e "${GREEN}Installing PyTorch and Torchvision inside virtual environment...${NC}"
 
-# Install system dependencies for PyTorch and Torchvision
+# Install system dependencies required for PyTorch
 sudo apt update
-sudo apt install -y python3-pip libjpeg-dev libopenblas-dev libopenmpi-dev libomp-dev \
+sudo apt install -y libjpeg-dev libopenblas-dev libopenmpi-dev libomp-dev \
     libavcodec-dev libavformat-dev libswscale-dev zlib1g-dev libpython3-dev
 
-# Upgrade pip and setuptools
-sudo -H pip3 install --upgrade pip setuptools wheel cython
+# Upgrade pip and setuptools inside venv (no sudo here!)
+pip install --upgrade pip setuptools wheel cython
 
-# Install PyTorch and Torchvision (CPU-only versions)
-sudo -H pip3 install torch torchvision
+# Install PyTorch and Torchvision (CPU-only)
+pip install torch torchvision
 
 # Verify installation
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    echo "Verifying installation..."
+python3 -c "import torch; import torchvision; print(f'PyTorch version: {torch.__version__}'); print(f'Torchvision version: {torchvision.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}')"
 
-    python3 -c "import torch; import torchvision; print(f'PyTorch version: {torch.__version__}'); print(f'Torchvision version: {torchvision.__version__}'); print(f'CUDA available: {torch.cuda.is_available()}')"
-
-    echo -e "${GREEN}PyTorch and Torchvision installed successfully.${NC}"
-fi
+echo -e "${GREEN}PyTorch and Torchvision installed successfully.${NC}"
