@@ -24,7 +24,7 @@ if [ ! -d "venv" ]; then
 fi
 
 # Activate virtual environment
-source ~venv/bin/activate
+source venv/bin/activate
 
 # Upgrade pip inside venv
 pip install --upgrade pip
